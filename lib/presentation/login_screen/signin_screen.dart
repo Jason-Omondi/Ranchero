@@ -2,8 +2,10 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import '../../core/widgets/custom_button.dart';
 import 'package:bumpyj/core/utils/extensions.dart';
 import 'package:bumpyj/core/constants/app_colors.dart';
+import 'package:bumpyj/core/widgets/custom_text_widget.dart';
 import 'package:bumpyj/presentation/login_screen/controller/signin_controller.dart';
 
 // ignore: must_be_immutable
@@ -62,6 +64,15 @@ class SigninScreen extends GetWidget<SigninController> {
                 child: Column(
                   children: [
                     // Employee Number
+                    CustomLabelText(
+                      text: "Employee Number",
+                      style: context.theme.textTheme.bodyMedium?.copyWith(
+                        color: isDarkMode
+                            ? AppColors.textDark
+                            : AppColors.textLight,
+                      ),
+                    ),
+
                     TextFormField(
                       controller: controller.empNoController,
                       focusNode: controller.usernameFocus,
@@ -86,6 +97,14 @@ class SigninScreen extends GetWidget<SigninController> {
                     SizedBox(height: context.deviceHeight * 0.02),
 
                     // Password Field
+                    CustomLabelText(
+                      text: "Password",
+                      style: context.theme.textTheme.bodyMedium?.copyWith(
+                        color: isDarkMode
+                            ? AppColors.textDark
+                            : AppColors.textLight,
+                      ),
+                    ),
                     Obx(
                       () => TextField(
                         controller: controller.passwordController,
@@ -113,7 +132,9 @@ class SigninScreen extends GetWidget<SigninController> {
                               controller.isPasswordHidden.value
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off,
-                              color: context.colorScheme.surface,
+                              color: isDarkMode
+                                  ? context.colorScheme.onPrimary
+                                  : context.colorScheme.onSurface,
                             ),
                           ),
                         ),
@@ -138,33 +159,26 @@ class SigninScreen extends GetWidget<SigninController> {
                     SizedBox(height: context.deviceHeight * 0.03),
 
                     // Login Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: context.deviceHeight * 0.06,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: isDarkMode
-                              ? AppColors.backgroundColor
-                              : AppColors.primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // Handle login
-                          }
-                        },
-                        child: Text(
-                          "Log in",
-                          style: context.theme.textTheme.bodyLarge?.copyWith(
-                            color: isDarkMode
-                                ? AppColors.primaryColor
-                                : context.colorScheme.onPrimary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+
+                    CustomButton(
+                      label: "Log in",
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Handle login
+                        }
+                        // Handle button click
+                      },
+                      backgroundColor: isDarkMode
+                          ? AppColors.backgroundColor
+                          : AppColors.primaryColor,
+                      textColor: isDarkMode
+                          ? AppColors.primaryColor
+                          : context.colorScheme.onPrimary,
+                      borderRadius: 5.0,
+                      elevation: 5.0,
+                      //borderColor: Colors.deepPurpleAccent,
+                      borderWidth: 1.5,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                   ],
                 ),
@@ -381,3 +395,34 @@ class SigninScreen extends GetWidget<SigninController> {
   }
 }
 */
+
+/*                  SizedBox(
+                      width: double.infinity,
+                      height: context.deviceHeight * 0.06,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isDarkMode
+                              ? AppColors.backgroundColor
+                              : AppColors.primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            // Handle login
+                          }
+                        },
+                        child: Text(
+                          "Log in",
+                          style: context.theme.textTheme.bodyLarge?.copyWith(
+                            color: isDarkMode
+                                ? AppColors.primaryColor
+                                : context.colorScheme.onPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+*/
+                   
