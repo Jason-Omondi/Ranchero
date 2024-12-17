@@ -26,7 +26,7 @@ samples, guidance on mobile development, and a full API reference.
 - Use GetX for controllers and state management.
 
 ## Folder Structure:
-
+```
 lib/
 ├── core/
 │   ├── constants/ (App-wide constants like app_theme, etc.)
@@ -50,4 +50,4 @@ lib/
 |           ├── controllers/ (State controller for screen)
 |           ├── loginscreen.dart (Screen-specific widgets)
 ├── main.dart (App entry point)
-
+```
