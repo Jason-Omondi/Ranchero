@@ -2,10 +2,14 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../core/widgets/custom_button.dart';
 import 'package:bumpyj/core/utils/extensions.dart';
+import 'package:bumpyj/core/routes/app_routes.dart';
 import 'package:bumpyj/core/constants/app_colors.dart';
+import 'package:bumpyj/data/models/user/user_data.dart';
 import 'package:bumpyj/core/widgets/custom_text_widget.dart';
+import 'package:bumpyj/data/models/login/post_login_resp.dart';
 import 'package:bumpyj/presentation/login_screen/controller/signin_controller.dart';
 
 // ignore: must_be_immutable
@@ -164,7 +168,7 @@ class SigninScreen extends GetWidget<SigninController> {
                       label: "Log in",
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // Handle login
+                          ontapLoginBtn;
                         }
                         // Handle button click
                       },
@@ -216,7 +220,52 @@ class SigninScreen extends GetWidget<SigninController> {
       ),
     );
   }
+
+  final userdata = GetStorage();
+  final isDarkMode = Get.isDarkMode;
+
+  void _onCreateLoginSuccess() async {
+    if (controller.postLoginResp.status.toString() == "1") {
+      Get.snackbar("Success!!", "Welcome Back To Enagel!",
+          backgroundColor:
+              isDarkMode ? AppColors.backgroundColor : AppColors.primaryColor,
+          colorText:
+              isDarkMode ? AppColor.darkBackground : AppColors.backgroundColor,
+          snackPosition: SnackPosition.TOP);
+
+      //extract the data
+      final token = controller.postLoginResp.returnValue;
+      userdata.write("token", token);
+      final serverresp = UserModel.fromJson(controller.postLoginResp.data!);
+      userdata.write("fullname", serverresp.fullName);
+      userdata.write("email", serverresp.email);
+      userdata.write("role", serverresp.role);
+      userdata.write("phoneNumber", serverresp.phoneNumber);
+
+      Get.toNamed(AppRoutes.splash);
+    }
+  }
+
+  void _onCreateLoginError() {
+    Get.snackbar("Error!!", "Invalid Credentials or Something went Wrong",
+        colorText:
+            isDarkMode ? AppColor.darkBackground : AppColors.backgroundColor,
+        snackPosition: SnackPosition.TOP);
+  }
+
+  void ontapLoginBtn() async {
+    UserModel userModel = UserModel();
+
+    userModel.employeeNumber = controller.empNoController.text.toUpperCase();
+    userModel.password = controller.passwordController.text;
+    controller.callcreateLogin(
+      userModel.toJson(),
+      successCall: _onCreateLoginSuccess,
+      errCall: _onCreateLoginError,
+    );
+  }
 }
+
 
 
 
