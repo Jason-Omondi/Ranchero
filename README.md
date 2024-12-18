@@ -1,20 +1,6 @@
 # Employee Self Service App
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-
-# Proposed Architecture
+## Proposed Architecture
 * Layers:
 
 - Presentation Layer: Contains UI, controllers, and widgets.
@@ -50,7 +36,20 @@ lib/
 
 ## Screenshots
 
-<p align="center">
-  <img src="https://github.com/Jason-Omondi/python-journey/blob/main/splash.PNG" width="400" alt="Onboarding Screen"/>
-  <img src="https://github.com/Jason-Omondi/python-journey/blob/main/login.PNG" width="400" alt="Login Screen"/>
-</p>
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" style="padding:10px;">
+        <img src="https://github.com/Jason-Omondi/python-journey/blob/main/splash.PNG" width="400" alt="Onboarding Screen" tyle="border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"/>
+        <br/>
+        Onboarding Screen
+      </td>
+      <td align="center" style="padding:10px;">
+        <img src="https://github.com/Jason-Omondi/python-journey/blob/main/login.PNG" width="400" alt="Login Screen" tyle="border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"/>
+        <br/>
+        Login Screen
+      </td>
+    </tr>
+  </table>
+</div>
+
