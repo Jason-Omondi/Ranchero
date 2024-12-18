@@ -41,13 +41,9 @@ lib/
 │   ├── usecases/ (Business logic for API requests)
 ├── presentation/
 │   ├── screens/ (UI screens)
-|       ├── login_screen/
+|       ├── name_of_screen/ (folders)
 |           ├── bindings/ (Bindings for each GetX controller)
 |           ├── controllers/ (State controller for each screen)
-|           ├── loginscreen.dart (Screen-specific widgets)
-|       ├── splash_screen/
-|           ├── bindings/ (Bindings for GetX controller)
-|           ├── controllers/ (State controller for screen)
-|           ├── loginscreen.dart (Screen-specific widgets)
+|           ├── screen.dart (Screen-specific widgets)
 ├── main.dart (App entry point)
 ```
