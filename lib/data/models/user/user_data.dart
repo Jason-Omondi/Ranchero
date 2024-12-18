@@ -1,7 +1,15 @@
+import 'dart:convert';
+
+List<UserModel> userModelFromJson(String str) =>
+    List<UserModel>.from(json.decode(str).map((x) => UserModel.fromJson(x)));
+
+String userModelToJson(List<UserModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class UserModel {
   String? email;
   String? employeeNumber;
-  String? password;
+  dynamic password;
   String? fullName;
   String? phoneNumber;
   String? role;
@@ -15,25 +23,21 @@ class UserModel {
     this.role,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      email: json['Email'] ?? '',
-      employeeNumber: json['EmployeeNumber'] ?? '',
-      password: json['Password'] ?? '',
-      fullName: json['FullName'] ?? '',
-      phoneNumber: json['PhoneNumber'] ?? '',
-      role: json['Role'] ?? '',
-    );
-  }
+  factory UserModel.fromJson(Map<String?, dynamic> json) => UserModel(
+        email: json["email"],
+        employeeNumber: json["employeeNumber"],
+        password: json["password"] ?? "",
+        fullName: json["fullName"],
+        phoneNumber: json["phoneNumber"],
+        role: json["role"],
+      );
 
-  Map<String, dynamic> toJson() {
-    return {
-      'Email': email,
-      'EmployeeNumber': employeeNumber,
-      'Password': password,
-      'FullName': fullName,
-      'PhoneNumber': phoneNumber,
-      'Role': role,
-    };
-  }
+  Map<String?, dynamic> toJson() => {
+        "email": email,
+        "employeeNumber": employeeNumber,
+        "password": password ?? "",
+        "fullName": fullName,
+        "phoneNumber": phoneNumber,
+        "role": role,
+      };
 }

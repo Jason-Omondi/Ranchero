@@ -1,19 +1,22 @@
 import 'package:get/get.dart';
-import '../model/signin_model.dart';
+import '../model/signup_model.dart';
 import 'package:flutter/material.dart';
 import '../../../core/utils/exceptions.dart';
+import '../../../data/providers/api_client.dart';
 import '../../../core/constants/app_colors.dart';
-import 'package:bumpyj/data/providers/api_client.dart';
-import 'package:bumpyj/data/models/user/user_data.dart';
-import 'package:bumpyj/data/models/login/post_login_resp.dart';
+import '../../../data/models/user/user_data.dart';
+import '../../../data/models/login/post_login_resp.dart';
 
-class SigninController extends GetxController {
+class SignupController extends GetxController {
   final FocusNode usernameFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
+  final FocusNode passwordcFocus = FocusNode();
   TextEditingController empNoController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordcController = TextEditingController();
   var isPasswordHidden = true.obs;
-  Rx<SignInModel> signInModelObj = SignInModel().obs;
+  var iscfPasswordHidden = true.obs;
+  Rx<SignupModel> signInModelObj = SignupModel().obs;
   DefaultResponse postLoginResp = DefaultResponse();
   final isDarkMode = Get.isDarkMode;
 
@@ -30,27 +33,25 @@ class SigninController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    empNoController.dispose();
-    passwordController.dispose();
   }
 
-  void callcreateLogin(Map req,
+  void callcreateSignUp(Map req,
       {VoidCallback? successCall, VoidCallback? errCall}) async {
-    return Get.find<ApiClient>().createLogin(
+    return Get.find<ApiClient>().Register(
       onSuccess: (resp) {
-        onCreateLoginSuccess(resp);
+        onCreateSignUpSuccess(resp);
         if (successCall != null) {
           successCall();
         }
       },
       onError: (err) {
-        onCreateLoginError(err);
+        onCreateSignUpError(err);
       },
       requestData: req,
     );
   }
 
-  void onCreateLoginSuccess(var response) {
+  void onCreateSignUpSuccess(var response) {
     postLoginResp = DefaultResponse.fromJson(response);
 
     if (postLoginResp.status.toString() == "1") {
@@ -60,17 +61,17 @@ class SigninController extends GetxController {
     }
   }
 
-  void onCreateLoginError(var err) {
+  void onCreateSignUpError(var err) {
     if (err is NoInternetException) {
-      Get.rawSnackbar(
+      debugPrint(
+          "Login Successful but something failed in the code: ${err.toString()},");
+      Get.snackbar(
+        "Error!",
+        err != null ? '$err' : "Something went wrong, but it's not your fault",
         backgroundColor:
-            isDarkMode ? AppColors.backgroundColor : AppColors.textDark,
-        messageText: Text(
-          '$err',
-          style: TextStyle(
-            color: isDarkMode ? AppColors.backgroundColor : AppColors.textDark,
-          ),
-        ),
+            isDarkMode ? AppColors.backgroundColor : AppColors.primaryColor,
+        colorText:
+            isDarkMode ? AppColors.darkBackground : AppColors.backgroundColor,
       );
     }
   }

@@ -1,19 +1,18 @@
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import '../../core/routes/app_routes.dart';
 import 'package:get_storage/get_storage.dart';
+import '../../core/constants/app_colors.dart';
 import '../../core/widgets/custom_button.dart';
+import '../../data/models/user/user_data.dart';
 import 'package:bumpyj/core/utils/extensions.dart';
-import 'package:bumpyj/core/routes/app_routes.dart';
-import 'package:bumpyj/core/constants/app_colors.dart';
-import 'package:bumpyj/data/models/user/user_data.dart';
-import 'package:bumpyj/core/widgets/custom_text_widget.dart';
-import 'package:bumpyj/presentation/login_screen/controller/signin_controller.dart';
+import '../../core/widgets/custom_text_widget.dart';
+import 'package:bumpyj/presentation/sign_up_screen/controller/signup_controller.dart';
 
-// ignore: must_be_immutable
-class SigninScreen extends GetWidget<SigninController> {
-  SigninScreen({super.key});
+class SignUpScreen extends GetWidget<SignupController> {
+  SignUpScreen({super.key});
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -30,7 +29,6 @@ class SigninScreen extends GetWidget<SigninController> {
             children: [
               SizedBox(height: context.deviceHeight * 0.1),
 
-              // Placeholder Lottie Animation
               Hero(
                 tag: 'signup-hero',
                 child: LottieBuilder.asset(
@@ -45,9 +43,8 @@ class SigninScreen extends GetWidget<SigninController> {
 
               SizedBox(height: context.deviceHeight * 0.02),
 
-              // Welcome Text
               Text(
-                'Welcome Back',
+                'Welcome!',
                 style: context.theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: context.isSmallScreen ? 20 : 24,
@@ -55,7 +52,7 @@ class SigninScreen extends GetWidget<SigninController> {
               ),
               SizedBox(height: 10),
               Text(
-                'Log in to continue',
+                'Sign in with you company staff number',
                 style: context.theme.textTheme.bodyMedium?.copyWith(
                   color: context.colorScheme.onSurface.withOpacity(0.7),
                   fontSize: context.isSmallScreen ? 14 : 16,
@@ -117,8 +114,8 @@ class SigninScreen extends GetWidget<SigninController> {
                     ),
                     Obx(
                       () => TextField(
-                        controller: controller.passwordController,
-                        focusNode: controller.passwordFocus,
+                        controller: controller.passwordcController,
+                        focusNode: controller.passwordcFocus,
                         obscureText: controller.isPasswordHidden.value,
                         decoration: InputDecoration(
                           labelText: 'Type your password',
@@ -151,16 +148,51 @@ class SigninScreen extends GetWidget<SigninController> {
                       ),
                     ),
 
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {
-                          // Forgot Password Handler
-                        },
-                        child: Text(
-                          "Forgot Password?",
-                          style: context.theme.textTheme.bodyMedium?.copyWith(
-                            color: AppColors.textRed,
+                    SizedBox(height: context.deviceHeight * 0.02),
+
+                    // Password Field
+                    CustomLabelText(
+                      text: "Confirm Password",
+                      style: context.theme.textTheme.bodyMedium?.copyWith(
+                        color: isDarkMode
+                            ? AppColors.textDark
+                            : AppColors.textLight,
+                        fontWeight: FontWeight.bold,
+                        fontSize: context.isSmallScreen ? 16 : 18,
+                      ),
+                    ),
+
+                    Obx(
+                      () => TextField(
+                        controller: controller.passwordController,
+                        focusNode: controller.passwordFocus,
+                        obscureText: controller.isPasswordHidden.value,
+                        decoration: InputDecoration(
+                          labelText: 'Confirm your password',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              color: context.colorScheme.secondary,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: context.colorScheme.primary,
+                              width: 2.0,
+                            ),
+                          ),
+                          suffix: InkWell(
+                            onTap: () => controller.iscfPasswordHidden.toggle(),
+                            child: Icon(
+                              controller.isPasswordHidden.value
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off,
+                              color: isDarkMode
+                                  ? context.colorScheme.onPrimary
+                                  : context.colorScheme.onSurface,
+                            ),
                           ),
                         ),
                       ),
@@ -171,11 +203,16 @@ class SigninScreen extends GetWidget<SigninController> {
                     // Login Button
 
                     CustomButton(
-                      label: "Log in",
+                      label: "Sign up",
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          print("tring...");
-                          ontapLoginBtn();
+                          if (controller.passwordController.text ==
+                              controller.passwordcController.text) {
+                            ontapSignInBtn();
+                          } else {
+                            Get.snackbar("Info!", "Passwords do not match",
+                                snackPosition: SnackPosition.TOP);
+                          }
                         }
                         // Handle button click
                       },
@@ -195,25 +232,24 @@ class SigninScreen extends GetWidget<SigninController> {
                 ),
               ),
 
-              SizedBox(height: context.deviceHeight * 0.04),
+              SizedBox(height: context.deviceHeight * 0.03),
 
               // Sign Up Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "First time?",
+                    "Have an account?",
                     style: TextStyle(
                       color: context.colorScheme.onSurface,
                     ),
                   ),
                   TextButton(
                     onPressed: () {
-                      // Handle sign up
-                      ontapSignupBtn();
+                      onTapLoginBtn();
                     },
                     child: Text(
-                      'Sign Up',
+                      'Sign In',
                       style: TextStyle(
                         color: context.colorScheme.secondary,
                         fontWeight: FontWeight.bold,
@@ -229,16 +265,16 @@ class SigninScreen extends GetWidget<SigninController> {
     );
   }
 
-  void ontapSignupBtn() {
-    Get.toNamed(AppRoutes.signUpScreen);
+  void onTapLoginBtn() {
+    Get.toNamed(AppRoutes.signInScreen);
   }
 
   final userdata = GetStorage();
   final isDarkMode = Get.isDarkMode;
 
-  void _onCreateLoginSuccess() async {
+  void _onCreateSignUpSuccess() async {
     if (controller.postLoginResp.status.toString() == "1") {
-      Get.snackbar("Success!!", "Welcome Back To Enagel!",
+      Get.snackbar("Success!!", "Proceed to login!",
           backgroundColor:
               isDarkMode ? AppColors.backgroundColor : AppColors.primaryColor,
           colorText:
@@ -254,27 +290,20 @@ class SigninScreen extends GetWidget<SigninController> {
       userdata.write("role", serverresp.role);
       userdata.write("phoneNumber", serverresp.phoneNumber);
 
-      Get.toNamed(AppRoutes.dashboardScreen);
+      Get.toNamed(AppRoutes.signInScreen);
     }
   }
 
-  void _onCreateLoginError() {
-    //if (controller.postLoginResp.status.toString() == "1") {}
+  void _onCreateSignUpError() {
     print(
-        "Login Successful but something failed in the code: ${controller.postLoginResp.message},");
-    Get.snackbar(
-        "Error!!",
-        controller.postLoginResp.message ??
-            "Invalid Credentials or Something went Wrong",
-        backgroundColor: isDarkMode
-            ? AppColors.snackbarbackgroundColorDark
-            : AppColors.snackbarbackgroundColorLight,
+        "Login Successful but something failed: ${controller.postLoginResp.message},");
+    Get.snackbar("Error!!", "Invalid Credentials or Something went Wrong",
         colorText:
             isDarkMode ? AppColor.darkBackground : AppColors.backgroundColor,
         snackPosition: SnackPosition.TOP);
   }
 
-  void ontapLoginBtn() async {
+  void ontapSignInBtn() async {
     UserModel userModel = UserModel();
 
     userModel.employeeNumber = controller.empNoController.text.toUpperCase();
@@ -283,11 +312,10 @@ class SigninScreen extends GetWidget<SigninController> {
     userModel.phoneNumber = "";
     userModel.fullName = "";
     userModel.role = "";
-
-    controller.callcreateLogin(
+    controller.callcreateSignUp(
       userModel.toJson(),
-      successCall: _onCreateLoginSuccess,
-      errCall: _onCreateLoginError,
+      successCall: _onCreateSignUpSuccess,
+      errCall: _onCreateSignUpError,
     );
   }
 }

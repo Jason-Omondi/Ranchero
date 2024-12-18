@@ -18,6 +18,10 @@ class AppColors {
   // Light Mode Colors
   static const Color primaryColor = Color(0xFF0D2847); // Dark blue
   static const Color backgroundColor = Color(0xFFFFFFFF); // White
+  static const Color snackbarbackgroundColorLight =
+      Color.fromARGB(255, 89, 187, 182);
+  static const Color snackbarbackgroundColorDark =
+      Color.fromARGB(255, 51, 43, 43);
   static const Color textPrimary = Color(0xFF000000); // Black
   static const cardColor = Color(0xFFFFFFFF);
   static const textDark = Color(0xFF222222);

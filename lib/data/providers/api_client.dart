@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import '../../core/utils/helpers.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import '../../core/utils/exceptions.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,15 +15,7 @@ class ApiClient extends GetConnect {
   @override
   void onInit() {
     super.onInit();
-    httpClient.timeout = Duration(seconds: 30);
-    httpClient.addRequestModifier<dynamic>((request) {
-      Map<String, String> headers = {"Content-Type": "application/json"};
-      //encoding:
-      Encoding.getByName("utf-8");
-      request.headers.addAll(headers);
-      print(request);
-      return request;
-    });
+    httpClient.timeout = const Duration(seconds: 30);
   }
 
   Future<List<int>> readResponseBytes(Stream<List<int>> stream) async {
@@ -40,55 +33,55 @@ class ApiClient extends GetConnect {
     }
   }
 
-  bool _isSuccessCall(Response response) {
-    return response.isOk;
-  }
-
   //api methods
   Future createLogin(
       {Function(dynamic data)? onSuccess,
       Function(dynamic error)? onError,
-      Map requestData = const {}}) async {
+      Map? requestData}) async {
     try {
       ProgressDialogUtils.showProgressDialog();
       await isNetworkConnected();
 
-      Response response = await httpClient.post(
-        '$url/DataTransfer/Login',
-        body: requestData,
+      var response = await http.post(
+        Uri.parse('$url/DataTransfer/Login'),
+        headers: {"Content-Type": "application/json; charset=utf-8"},
+        body: json.encode(requestData),
       );
       ProgressDialogUtils.hideProgressDialog();
-      debugPrint(response.bodyString);
-      if (_isSuccessCall(response)) {
-        onSuccess!(response.body);
+      debugPrint(response.body);
+      if (response.statusCode == 200) {
+        onSuccess!(jsonDecode(response.body));
       } else {
         onError!(
-          response.hasError ? response.statusText : "Something went wrong!",
+          //response.hasError ? response.statusText :
+          "Something went wrong!",
         );
       }
     } catch (error) {
       ProgressDialogUtils.hideProgressDialog();
       onError!(error);
+      rethrow;
     }
   }
 
   Future Register(
       {Function(dynamic data)? onSuccess,
       Function(dynamic error)? onError,
-      Map requestData = const {}}) async {
+      Map? requestData}) async {
     try {
       ProgressDialogUtils.showProgressDialog();
       await isNetworkConnected();
 
-      final Response response = await httpClient
-          .post("$url/Datatransfer/Register", body: requestData);
+      final response = await http.post(Uri.parse("$url/Datatransfer/Register"),
+          headers: {"Content-Type": "application/json; charset=utf-8"},
+          body: json.encode(requestData));
       debugPrint(response.body);
       ProgressDialogUtils.hideProgressDialog();
-      if (_isSuccessCall(response)) {
-        onSuccess!(response.body);
+      if (response.statusCode == 200) {
+        onSuccess!(jsonDecode(response.body));
       } else {
         onError!(
-          response.hasError ? response.statusText : "Something went wrong!",
+          "Something went wrong!",
         );
       }
     } catch (error) {
