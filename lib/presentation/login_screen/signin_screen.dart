@@ -166,10 +166,11 @@ class SigninScreen extends GetWidget<SigninController> {
 
                     CustomButton(
                       label: "Log in",
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          ontapLoginBtn;
-                        }
+                      onPressed: () async {
+                        //if (_formKey.currentState!.validate()) {
+                        print("tring...");
+                        ontapLoginBtn();
+                        //}
                         // Handle button click
                       },
                       backgroundColor: isDarkMode

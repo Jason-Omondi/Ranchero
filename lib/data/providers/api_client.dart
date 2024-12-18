@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:bumpyj/core/utils/progress_utils.dart';
 
 class ApiClient extends GetConnect {
-  var url = "";
+  var url = "http://localhost:3077";
   final userdata = GetStorage();
   Map<String, String> headers = {"Content-Type": "application/json"};
 
@@ -58,6 +58,7 @@ class ApiClient extends GetConnect {
         body: requestData,
       );
       ProgressDialogUtils.hideProgressDialog();
+      debugPrint(response.bodyString);
       if (_isSuccessCall(response)) {
         onSuccess!(response.body);
       } else {

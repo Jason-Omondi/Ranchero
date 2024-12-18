@@ -1,39 +1,39 @@
 class UserModel {
-  final String email;
-  final String employeeNumber;
-  final String password;
-  final String fullName;
-  final String phoneNumber;
-  final String role;
+  String? email;
+  String? employeeNumber;
+  String? password;
+  String? fullName;
+  String? phoneNumber;
+  String? role;
 
   UserModel({
-    required this.email,
-    required this.employeeNumber,
-    required this.password,
-    required this.fullName,
-    required this.phoneNumber,
-    required this.role,
+    this.email,
+    this.employeeNumber,
+    this.password,
+    this.fullName,
+    this.phoneNumber,
+    this.role,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      email: json['email'] ?? '',
-      employeeNumber: json['employeeNumber'] ?? '',
-      password: json['password'] ?? '',
-      fullName: json['fullName'] ?? '',
-      phoneNumber: json['phoneNumber'] ?? '',
-      role: json['role'] ?? '',
+      email: json['Email'] ?? '',
+      employeeNumber: json['EmployeeNumber'] ?? '',
+      password: json['Password'] ?? '',
+      fullName: json['FullName'] ?? '',
+      phoneNumber: json['PhoneNumber'] ?? '',
+      role: json['Role'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'email': email,
-      'employeeNumber': employeeNumber,
-      'password': password,
-      'fullName': fullName,
-      'phoneNumber': phoneNumber,
-      'role': role,
+      'Email': email,
+      'EmployeeNumber': employeeNumber,
+      'Password': password,
+      'FullName': fullName,
+      'PhoneNumber': phoneNumber,
+      'Role': role,
     };
   }
 }
