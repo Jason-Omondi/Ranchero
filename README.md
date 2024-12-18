@@ -47,3 +47,10 @@ lib/
 |           ├── screen.dart (Screen-specific widgets)
 ├── main.dart (App entry point)
 ```
+
+## Screenshots
+
+<p align="center">
+  <img src="https://github.com/Jason-Omondi/python-journey/blob/main/splash.PNG" width="400" alt="Onboarding Screen"/>
+  <img src="https://github.com/Jason-Omondi/python-journey/blob/main/login.PNG" width="400" alt="Login Screen"/>
+</p>

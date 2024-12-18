@@ -44,15 +44,15 @@ class SplashScreen extends GetWidget<SplashScreenController> {
               ),
               const Gap(10),
               Text(
-                "Enagel",
+                "Ranchero",
                 style: context.theme.textTheme.headlineMedium!.copyWith(
                     color: context.colorScheme.primary,
                     fontWeight: FontWeight.w600),
               ),
               const Gap(10),
               Text(
-                "Leave Management",
-                style: context.theme.textTheme.headlineSmall!.copyWith(
+                "Self Service App",
+                style: context.theme.textTheme.headlineMedium!.copyWith(
                     color: context.colorScheme.primary,
                     fontWeight: FontWeight.w600),
               ),
