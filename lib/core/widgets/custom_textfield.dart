@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:bumpyj/core/utils/extensions.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  final TextEditingController controller;
+class CustomTextField extends StatelessWidget {
   final String labelText;
-  final FocusNode? focusNode;
+  final TextEditingController controller;
+  final FocusNode focusNode;
   final bool obscureText;
-  final Widget? suffixIcon;
+  final void Function()? onSuffixTap;
+  final IconData? suffixIcon;
 
-  const CustomTextFormField({
-    Key? key,
-    required this.controller,
+  const CustomTextField({
     required this.labelText,
-    this.focusNode,
+    required this.controller,
+    required this.focusNode,
     this.obscureText = false,
+    this.onSuffixTap,
     this.suffixIcon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +29,20 @@ class CustomTextFormField extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.secondary,
+            color: context.colorScheme.secondary,
             width: 1.0,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
+            color: context.colorScheme.primary,
             width: 2.0,
           ),
         ),
-        suffixIcon: suffixIcon,
+        suffix: suffixIcon != null
+            ? InkWell(onTap: onSuffixTap, child: Icon(suffixIcon))
+            : null,
       ),
     );
   }

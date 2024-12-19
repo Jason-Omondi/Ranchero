@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import '../dashboard_screen.dart';
+import '../controller/dashboard_controller.dart';
 
 class DashboardScreenBindings extends Bindings {
   @override
   void dependencies() {
-    Get.put(DashboardScreen());
+    Get.put(DashboardController());
   }
 }

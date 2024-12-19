@@ -40,16 +40,22 @@ lib/
   <table>
     <tr>
       <td align="center" style="padding:10px;">
-        <img src="https://github.com/Jason-Omondi/python-journey/blob/main/splash.PNG" width="400" alt="Onboarding Screen" tyle="border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"/>
+        <img src="https://github.com/Jason-Omondi/python-journey/blob/main/splash.PNG" width="200" alt="Onboarding Screen"/>
         <br/>
-        Onboarding Screen
+        <small>Onboarding Screen</small>
       </td>
       <td align="center" style="padding:10px;">
-        <img src="https://github.com/Jason-Omondi/python-journey/blob/main/login.PNG" width="400" alt="Login Screen" tyle="border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"/>
+        <img src="https://github.com/Jason-Omondi/python-journey/blob/main/login.PNG" width="200" alt="Login Screen"/>
         <br/>
-        Login Screen
+        <small>Login Screen</small>
+      </td>
+      <td align="center" style="padding:10px;">
+        <img src="https://github.com/Jason-Omondi/python-journey/blob/main/dashboard.PNG" width="200" alt="Dashboard Screen"/>
+        <br/>
+        <small>Dashboard Screen</small>
       </td>
     </tr>
   </table>
 </div>
+
 

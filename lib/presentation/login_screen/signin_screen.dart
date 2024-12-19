@@ -253,15 +253,13 @@ class SigninScreen extends GetWidget<SigninController> {
       userdata.write("email", serverresp.email);
       userdata.write("role", serverresp.role);
       userdata.write("phoneNumber", serverresp.phoneNumber);
+      userdata.write("employeeNumber", serverresp.employeeNumber);
 
       Get.toNamed(AppRoutes.dashboardScreen);
     }
   }
 
   void _onCreateLoginError() {
-    //if (controller.postLoginResp.status.toString() == "1") {}
-    print(
-        "Login Successful but something failed in the code: ${controller.postLoginResp.message},");
     Get.snackbar(
         "Error!!",
         controller.postLoginResp.message ??
