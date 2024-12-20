@@ -55,8 +55,8 @@ class SigninController extends GetxController {
 
     if (postLoginResp.status.toString() == "1") {
       //convert the array to user object
-      var data = UserModel.fromJson(postLoginResp.data!);
-      debugPrint("Login Successful: ${data.fullName},");
+      // var data = UserModel.fromJson(postLoginResp.data!["userData"]);
+      //debugPrint("Login Successful: ${data.fullName},");
     }
   }
 

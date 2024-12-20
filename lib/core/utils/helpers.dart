@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -34,6 +35,7 @@ class NetworkInfo implements NetworkInfoI {
   }
 }
 
+
 //date helpers
 String greeting() {
   var hour = DateTime.now().hour;
@@ -44,6 +46,15 @@ String greeting() {
     return 'Good Afternoon';
   }
   return ' Good Evening';
+}
+
+String formatDate(String apiDate) {
+  try {
+    final dateTime = DateTime.parse(apiDate);
+    return DateFormat('EEE, dd MMM').format(dateTime);
+  } catch (e) {
+    return 'Invalid date';
+  }
 }
 
 var date = new DateTime.now();

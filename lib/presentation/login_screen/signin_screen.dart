@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -9,6 +10,7 @@ import 'package:bumpyj/core/routes/app_routes.dart';
 import 'package:bumpyj/core/constants/app_colors.dart';
 import 'package:bumpyj/data/models/user/user_data.dart';
 import 'package:bumpyj/core/widgets/custom_text_widget.dart';
+import 'package:bumpyj/data/models/leavemodels/leavemodel.dart';
 import 'package:bumpyj/presentation/login_screen/controller/signin_controller.dart';
 
 // ignore: must_be_immutable
@@ -248,13 +250,28 @@ class SigninScreen extends GetWidget<SigninController> {
       //extract the data
       final token = controller.postLoginResp.returnValue;
       userdata.write("token", token);
-      final serverresp = UserModel.fromJson(controller.postLoginResp.data!);
+      final serverresp =
+          UserModel.fromJson(controller.postLoginResp.data?["userData"] ?? "");
       userdata.write("fullname", serverresp.fullName);
       userdata.write("email", serverresp.email);
       userdata.write("role", serverresp.role);
       userdata.write("phoneNumber", serverresp.phoneNumber);
       userdata.write("employeeNumber", serverresp.employeeNumber);
 
+      final leaveBalance = LeaveBalance.fromJson(
+          (controller.postLoginResp.data?["leaveBalance"] ?? ""));
+
+      print('Total Entitlement Days: ${leaveBalance.totalEntitlementDays}');
+      // final leaveZote = leaveModelFromJson(
+      // (controller.postLoginResp.data?["leaveAppliations"] ?? ""));
+
+      final leaveApplications =
+          controller.postLoginResp.data?["leaveAppliations"];
+
+      final leaveZote = leaveModelFromJson(json.encode(leaveApplications));
+
+      userdata.write("leaveBalance", leaveBalance);
+      userdata.write("leaveApplications", leaveZote);
       Get.toNamed(AppRoutes.dashboardScreen);
     }
   }
